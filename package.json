@@ -1,0 +1,30 @@
+{
+  "type": "module",
+  "name": "leetcode-update",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [],
+  "author": "Tsung Yu Chan",
+  "license": "ISC",
+  "description": "This is a auto trigger application to update the LeetCode Daily Challenge question.",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "googleapis": "^105.0.0",
+    "node-fetch": "^3.3.2",
+    "node-schedule": "^2.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jkcharlie6679/LeetCode-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jkcharlie6679/LeetCode-bot/issues"
+  },
+  "homepage": "https://github.com/jkcharlie6679/LeetCode-bot#readme",
+  "devDependencies": {
+    "mocha": "^10.2.0"
+  }
+}
