@@ -18,11 +18,11 @@ schedule.scheduleJob("5 0 * * *", () => {
     const todayStr = new Date().toLocaleString({ timeZone: "UCT" });
     const today = new Date(todayStr);
     const discussDay = new Date;
-    discussDay.setDate(today.getDate() + 8 - today.getDay());
-
+    const day = today.getDay() == 0 ? 7 : today.getDay();
+    discussDay.setDate(today.getDate() + 8 - day);
     let sheetName = discussDay.getFullYear() + "/" + ("0" + (discussDay.getMonth() + 1)).slice(-2) + "/" + ("0" + discussDay.getDate()).slice(-2);
     const sheedId = await getSheetId(authToken, spreadsheetId, sheetName);
-    const updateRange = sheetName + "!A" + (today.getDay() + 1) + ":B" + (today.getDay() + 1);
+    const updateRange = sheetName + "!A" + (day + 1) + ":B" + (day + 1);
 
     const [_, data] = await fetchDailyCodingChallenge();
     const difficulty = data["data"]["activeDailyCodingChallengeQuestion"]["question"]["difficulty"];
@@ -33,7 +33,7 @@ schedule.scheduleJob("5 0 * * *", () => {
     const resource = { values: [[difficulty, "=HYPERLINK(\"" + url + "\", \"" + questionId + ". " + title + "\")"]] };
     await updateSheet(authToken, spreadsheetId, updateRange, resource);
 
-    const colorRange = "A" + (today.getDay() + 1) + ":A" + (today.getDay() + 1);
+    const colorRange = "A" + (day + 1) + ":A" + (day + 1);
     await drawColor(authToken, spreadsheetId, sheedId, colorRange, difficultyColor[difficulty]);
   });
 });
