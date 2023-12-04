@@ -1,11 +1,20 @@
 import fs from "fs"
-import path from "path";
-import { fileURLToPath } from "url";
 import util from "util";
 
-const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
-const __dirname = path.dirname(__filename); // get the name of the directory
-const fileLog = fs.createWriteStream(__dirname + "/../server.log", { flags: "w" });
+
+const logDirectory = process.cwd() + "/log";
+let fileLog;
+
+function logInit() {
+  fs.stat(logDirectory, (err, stats) => {
+    if (err && err.code == "ENOENT") {
+      fs.mkdir(logDirectory, { recursive: true }, (err) => {
+        console.error('Error creating folder:', err);
+      });
+    }
+  });
+  fileLog = fs.createWriteStream(logDirectory + "/logs.log", { flags: "w" });
+}
 
 const logOutput = (level, res) => {
   if (level === 0) {
@@ -15,4 +24,4 @@ const logOutput = (level, res) => {
   }
 }
 
-export { logOutput }
+export { logInit, logOutput }

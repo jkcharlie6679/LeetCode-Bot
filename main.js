@@ -1,16 +1,22 @@
+import assert from "assert"
 import schedule from "node-schedule"
 import { getAuthToken, updateSheet, getSheetId, drawColor } from "./src/sheetApi.js";
 import { fetchDailyCodingChallenge } from "./src/leetcodeApi.js";
+import { logInit } from "./src/log.js"
 
 process.env.GOOGLE_APPLICATION_CREDENTIALS = "./credentials.json"
 process.env.TZ = "UTC"
 
-const spreadsheetId = process.argv[2];
+const spreadsheetId = process.env.GOOGLE_SPREADSHEET_ID;
+assert(spreadsheetId !== undefined, "Please provide the soreadsheet ID.")
+
 const difficultyColor = {
   "Easy": "b7d7a8",
   "Medium": "ffe599",
   "Hard": "ea9999"
 }
+
+logInit();
 
 schedule.scheduleJob("5 0 * * *", () => {
   getAuthToken().then(async (authToken) => {
@@ -37,4 +43,3 @@ schedule.scheduleJob("5 0 * * *", () => {
     await drawColor(authToken, spreadsheetId, sheedId, colorRange, difficultyColor[difficulty]);
   });
 });
-
