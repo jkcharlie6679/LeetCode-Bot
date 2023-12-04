@@ -16,7 +16,7 @@ const difficultyColor = {
   "Hard": "ea9999"
 }
 
-logInit();
+await logInit();
 
 schedule.scheduleJob("5 0 * * *", () => {
   getAuthToken().then(async (authToken) => {

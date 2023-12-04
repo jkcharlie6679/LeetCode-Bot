@@ -1,7 +1,6 @@
 import fs from "fs"
 import util from "util";
 
-
 const logDirectory = process.cwd() + "/log";
 let fileLog;
 
@@ -9,11 +8,13 @@ function logInit() {
   fs.stat(logDirectory, (err, stats) => {
     if (err && err.code == "ENOENT") {
       fs.mkdir(logDirectory, { recursive: true }, (err) => {
-        console.error('Error creating folder:', err);
+        if (err) {
+          console.error('Error creating folder:', err);
+        }
       });
     }
+    fileLog = fs.createWriteStream(logDirectory + "/logs.log", { flags: "w" });
   });
-  fileLog = fs.createWriteStream(logDirectory + "/logs.log", { flags: "w" });
 }
 
 const logOutput = (level, res) => {
