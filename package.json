@@ -11,6 +11,7 @@
   "license": "ISC",
   "description": "This is a auto trigger application to update the LeetCode Daily Challenge question.",
   "dependencies": {
+    "discord.js": "^14.14.1",
     "fs": "^0.0.1-security",
     "googleapis": "^105.0.0",
     "node-fetch": "^3.3.2",
